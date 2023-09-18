@@ -1,5 +1,11 @@
 <div>
+    <div class="my-3">
+        {{channleName$ | async | titlecase}}
+    </div>
     <input type="number" placeholder="enter value" [(ngModel)]="customValue"/>
     <button class="btn btn-primary mx-2" (click)="addToCounter()">Add to counter</button>
+</div>
 
+<div>
+    <button class="btn btn-primary mx-2" (click)="changeChannleName()">Change Channle Name</button>
 </div>

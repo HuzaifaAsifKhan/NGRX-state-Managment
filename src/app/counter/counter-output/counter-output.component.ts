@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ICounterState } from '../store/counter.state';
 import { Observable } from 'rxjs';
+import { getCounter } from '../store/counter.selector';
 
 @Component({
   selector: 'app-counter-output',
@@ -9,11 +10,11 @@ import { Observable } from 'rxjs';
   styleUrls: ['./counter-output.component.css']
 })
 export class CounterOutputComponent {
-  counter$:Observable<ICounterState>;
+  counter$!:Observable<number>;
   constructor(
     private store: Store<{counter: ICounterState}>
   ) {
-    this.counter$ = this.store.select('counter');
+    this.counter$ = this.store.select(getCounter);
   }
 
   
