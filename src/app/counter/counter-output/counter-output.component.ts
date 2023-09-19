@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { ICounterState } from '../store/counter.state';
 import { Observable } from 'rxjs';
 import { getCounter } from '../store/counter.selector';
+import { IAppState } from 'src/app/store/app.state';
 
 @Component({
   selector: 'app-counter-output',
@@ -12,7 +12,8 @@ import { getCounter } from '../store/counter.selector';
 export class CounterOutputComponent {
   counter$!:Observable<number>;
   constructor(
-    private store: Store<{counter: ICounterState}>
+    // private store: Store<{counter: ICounterState}> // we can also add only selected States like that or complete state Like Below
+    private store: Store<IAppState>
   ) {
     this.counter$ = this.store.select(getCounter);
   }

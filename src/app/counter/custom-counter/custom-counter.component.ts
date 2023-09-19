@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { ICounterState } from '../store/counter.state';
 import { changeChannleName, customIncrement } from '../store/counter.action';
 import { getChannleName } from '../store/counter.selector';
 import { Observable } from 'rxjs';
+import { IAppState } from 'src/app/store/app.state';
 
 @Component({
   selector: 'app-custom-counter',
@@ -14,7 +14,7 @@ export class CustomCounterComponent {
   customValue!: number;
   channleName$!: Observable<string>;
   constructor(
-    private store: Store<{counter: ICounterState}>
+    private store: Store<IAppState>
   ){
     this.channleName$ =  this.store.select(getChannleName);
   }

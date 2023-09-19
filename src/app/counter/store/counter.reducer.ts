@@ -36,4 +36,4 @@ export const counterReducer = createReducer(
             channleName: 'hafiz'
         }
     })
-)
+);
