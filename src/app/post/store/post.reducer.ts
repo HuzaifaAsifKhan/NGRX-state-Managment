@@ -9,9 +9,11 @@ export const postReducer = createReducer(
             ...state
         }
     }),
-    on(addPost, (state) => {
+    on(addPost, (state, action) => {
+        action = { ...action, id: (state.posts.length + 1).toString() }
         return {
-            ...state
+            ...state,
+            posts: [...state.posts, action]
         }
     }),
     on(getPost, (state) => {

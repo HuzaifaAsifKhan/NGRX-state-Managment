@@ -1,6 +1,6 @@
 import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -17,6 +17,7 @@ import { CounterOutputComponent } from './counter/counter-output/counter-output.
 import { CounterButtonComponent } from './counter/counter-button/counter-button.component';
 import { CustomCounterComponent } from './counter/custom-counter/custom-counter.component';
 import { PostListComponent } from './post/post-list/post-list.component';
+import { AddPostComponent } from './post/post-list/components/add-post/add-post.component';
 
 @NgModule({
   declarations: [
@@ -27,11 +28,13 @@ import { PostListComponent } from './post/post-list/post-list.component';
     CounterOutputComponent,
     CounterButtonComponent,
     CustomCounterComponent,
-    PostListComponent
+    PostListComponent,
+    AddPostComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     // StoreModule.forRoot({ counter: counterReducer, posts: postReducer }), // I can do that or like below to create reducer file in app store & put all those in one file
     StoreModule.forRoot(appReducer),
