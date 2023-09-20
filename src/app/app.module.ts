@@ -18,6 +18,7 @@ import { CounterButtonComponent } from './counter/counter-button/counter-button.
 import { CustomCounterComponent } from './counter/custom-counter/custom-counter.component';
 import { PostListComponent } from './post/post-list/post-list.component';
 import { AddPostComponent } from './post/post-list/components/add-post/add-post.component';
+import { EditPostComponent } from './post/post-list/components/edit-post/edit-post.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { AddPostComponent } from './post/post-list/components/add-post/add-post.
     CounterButtonComponent,
     CustomCounterComponent,
     PostListComponent,
-    AddPostComponent
+    AddPostComponent,
+    EditPostComponent
   ],
   imports: [
     BrowserModule,

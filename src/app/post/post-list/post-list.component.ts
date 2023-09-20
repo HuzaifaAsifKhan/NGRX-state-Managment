@@ -15,4 +15,8 @@ export class PostListComponent {
   constructor(private store: Store<IAppState>){
     this.posts$ = this.store.select(getPosts);
   }
+
+  updatePost(post: IPost){
+    console.log(post);
+  }
 }
