@@ -21,8 +21,8 @@ export class AddPostComponent {
 
 
   onAddPost(){
-    console.log(this.postForm.value);
     this.store.dispatch(addPost(this.postForm.value));
+    this.postForm.reset();
   }
 
   showErrors(formProperty:string): string{
