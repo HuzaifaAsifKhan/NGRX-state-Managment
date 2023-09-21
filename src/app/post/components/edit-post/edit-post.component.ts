@@ -47,7 +47,7 @@ export class EditPostComponent implements OnDestroy {
   }
 
   onUpdatePost(){
-    this.store.dispatch(updatePost(this.postForm.value));
+    this.store.dispatch(updatePost({updatedPost: this.postForm.value}));
     this.postForm.reset();
     this.router.navigate(['/post']);
   }
@@ -58,7 +58,6 @@ export class EditPostComponent implements OnDestroy {
       if(controler.errors['required']){
         return `${formProperty} must required`
       } else if(controler.errors['minlength']){
-        console.log(controler.errors['minlength'])
         return `${formProperty} have Insufficient Length`
       }
       return '';

@@ -25,7 +25,8 @@
                         {{ post.description | titlecase }}
                     </td>
                     <td>
-                        <a href="" class="btn btn-primary" [routerLink]="['edit', post.id]">Update</a>
+                        <a class="btn btn-primary mx-1" [routerLink]="['edit', post.id]">Update</a>
+                        <a class="btn btn-danger mx-1" (click)="deletePost(post.id)">Delete</a>
                     </td>
                 </tr>
             </tbody>

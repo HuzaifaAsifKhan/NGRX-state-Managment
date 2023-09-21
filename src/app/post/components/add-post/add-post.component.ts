@@ -27,11 +27,10 @@ export class AddPostComponent {
 
   showErrors(formProperty:string): string{
     const controler:any = this.postForm.controls[formProperty];
-    if(controler.touched || controler.dirty && controler.errors){
+    if((controler.touched || controler.dirty) && controler.errors){
       if(controler.errors['required']){
         return `${formProperty} must required`
       } else if(controler.errors['minlength']){
-        console.log(controler.errors['minlength'])
         return `${formProperty} have Insufficient Length`
       }
       return '';

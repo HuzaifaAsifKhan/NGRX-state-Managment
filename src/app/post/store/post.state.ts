@@ -15,7 +15,7 @@ export class IPostState {
 }
 
 export interface IPost {
-    id?: string;
+    id: string;
     title: string;
     description: string;
 }
