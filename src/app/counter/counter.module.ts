@@ -8,6 +8,9 @@ import { CounterOutputComponent } from './counter-output/counter-output.componen
 import { CounterButtonComponent } from './counter-button/counter-button.component';
 import { CustomCounterComponent } from './custom-counter/custom-counter.component';
 import { FormsModule } from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
+import { counterReducer } from './store/counter.reducer';
+import { COUNTER_STATE } from './store/counter.selector';
 
 
 @NgModule({
@@ -20,7 +23,8 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     FormsModule,
-    CounterRoutingModule
+    CounterRoutingModule,
+    StoreModule.forFeature(COUNTER_STATE, counterReducer),
   ]
 })
 export class CounterModule { }

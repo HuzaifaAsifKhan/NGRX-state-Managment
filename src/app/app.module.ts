@@ -5,7 +5,7 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 // import { counterReducer } from './counter/store/counter.reducer';
 // import { postReducer } from './post/store/post.reducer';
-import { appReducer } from './store/app.reducer';
+// import { appReducer } from './store/app.reducer';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,7 +22,8 @@ import { HomeComponent } from './home/home.component';
     BrowserModule,
     AppRoutingModule,
     // StoreModule.forRoot({ counter: counterReducer, posts: postReducer }), // I can do that or like below to create reducer file in app store & put all those in one file
-    StoreModule.forRoot(appReducer),
+    // StoreModule.forRoot(appReducer),
+    StoreModule.forRoot({}), //above two module are loaded on Application load , now Lazzy load the Store as per requirment
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode(), trace: true, traceLimit: 75})
   ],
   providers: [],
