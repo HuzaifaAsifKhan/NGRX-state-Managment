@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/coponents/header/header.component';
 import { HomeComponent } from './home/home.component';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { HomeComponent } from './home/home.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    EffectsModule.forRoot([]),
     // StoreModule.forRoot({ counter: counterReducer, posts: postReducer }), // I can do that or like below to create reducer file in app store & put all those in one file
     // StoreModule.forRoot(appReducer),
     StoreModule.forRoot({}), //above two module are loaded on Application load , now Lazzy load the Store as per requirment
