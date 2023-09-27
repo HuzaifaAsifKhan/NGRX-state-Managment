@@ -1,4 +1,4 @@
-export class User {
+export class IUserState {
     user: IUser | null = null;
 }
 

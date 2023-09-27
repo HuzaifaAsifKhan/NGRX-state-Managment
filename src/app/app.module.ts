@@ -6,6 +6,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 // import { counterReducer } from './counter/store/counter.reducer';
 // import { postReducer } from './post/store/post.reducer';
 // import { appReducer } from './store/app.reducer';
+import { AuthReducer } from './auth/store/auth.reducer';
+import { shareReducer } from './shared/store/share.reducer';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,9 +27,9 @@ import { LoaderSpinnerComponent } from './shared/components/loader-spinner/loade
     BrowserModule,
     AppRoutingModule,
     EffectsModule.forRoot([]),
-    // StoreModule.forRoot({ counter: counterReducer, posts: postReducer }), // I can do that or like below to create reducer file in app store & put all those in one file
-    // StoreModule.forRoot(appReducer),
-    StoreModule.forRoot({}), //above two module are loaded on Application load , now Lazzy load the Store as per requirment
+    // StoreModule.forRoot({ counter: counterReducer, posts: postReducer, share: shareReducer }), // I can do that or like below to create reducer file in app store & put all those in one file
+    // StoreModule.forRoot(appReducer), // Whoel store Loader with Variable
+    StoreModule.forRoot({share: shareReducer, auth: AuthReducer}), //above modules are loaded on Application load, but now Lazzy load the Store as per requirment
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode(), trace: true, traceLimit: 75})
   ],
   providers: [],

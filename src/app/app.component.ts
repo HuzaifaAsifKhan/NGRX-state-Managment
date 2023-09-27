@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { IShareState } from './shared/store/shared.state';
+import { getLoader, getErrorMessage } from './shared/store/share.selector';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +11,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ngrx-counter';
+  showLoader!: Observable<boolean>;
+  errorMessage!: Observable<string>;
+  constructor(
+    private store: Store<{share: IShareState}>
+  ){
+    this.showLoader = this.store.select(getLoader);
+    this.errorMessage = this.store.select(getErrorMessage);
+  }
 }
