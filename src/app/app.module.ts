@@ -9,15 +9,17 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './shared/coponents/header/header.component';
+import { HeaderComponent } from './shared/components/header/header.component';
 import { HomeComponent } from './home/home.component';
 import { EffectsModule } from '@ngrx/effects';
+import { LoaderSpinnerComponent } from './shared/components/loader-spinner/loader-spinner.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     HomeComponent,
+    LoaderSpinnerComponent,
   ],
   imports: [
     BrowserModule,
