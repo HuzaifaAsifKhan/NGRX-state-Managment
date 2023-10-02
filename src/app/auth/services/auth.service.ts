@@ -6,13 +6,27 @@ import { IUser } from '../store/auth.state';
 
 @Injectable()
 export class AuthService {
+  constructor(private http: HttpClient) {}
 
-  constructor(
-    private http: HttpClient
-  ) { }
+  login = (
+    email: string,
+    password: string,
+    returnSecureToken: boolean = true
+  ): Observable<IUser> => {
+    return this.http.post<IUser>(
+      `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.firebase_api_key}`,
+      { email, password, returnSecureToken }
+    );
+  };
 
-
-  login = (email: string, password: string, returnSecureToken: boolean = true): Observable<IUser>  => {
-    return this.http.post<IUser>(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.firebase_api_key}`, {email, password, returnSecureToken});
-  }
+  signup = (
+    email: string,
+    password: string,
+    returnSecureToken: boolean = true
+  ): Observable<IUser> => {
+    return this.http.post<IUser>(
+      ` https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.firebase_api_key}`,
+      { email, password, returnSecureToken }
+    );
+  };
 }
