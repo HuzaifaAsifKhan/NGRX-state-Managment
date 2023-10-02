@@ -28,18 +28,15 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(loginStart),
       exhaustMap((action: IAuth) => {
-        // this.store.dispatch(setLoader({status: true}));
-        of(setLoader({ status: true }));
+        this.store.dispatch(setLoader({ status: true }));
         return this.authService.login(action.email, action.password).pipe(
           map((user: IUser) => {
-            // this.store.dispatch(setLoader({status: false}));
-            of(setLoader({ status: false }));
+            this.store.dispatch(setLoader({ status: false }));
             this.store.dispatch(setErrormessage({ message: '' }));
             return loginSuccess({ user });
           }),
           catchError((error) => {
-            // this.store.dispatch(setLoader({status: false}));
-            of(setLoader({ status: false }));
+            this.store.dispatch(setLoader({ status: false }));
             // this.store.dispatch(setErrormessage({message: error.error.error.message || 'SOMETHING WENT WRONG'}));
             return of(
               setErrormessage({
@@ -53,10 +50,10 @@ export class AuthEffects {
     )
   );
 
-  loginRedirect$ = createEffect(
+  redirect$ = createEffect(
     () => {
       return this.actions$.pipe(
-        ofType(loginSuccess),
+        ofType(...[loginSuccess, signupSuccess]),
         tap((action) => {
           this.router.navigate(['/']);
         })
@@ -69,17 +66,15 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(signupStart),
       exhaustMap((action: IAuth) => {
-        of(setLoader({ status: true }));
+        this.store.dispatch(setLoader({ status: true }));
         return this.authService.signup(action.email, action.password).pipe(
           map((user: IUser) => {
-            // this.store.dispatch(setLoader({status: false}));
-            of(setLoader({ status: false }));
+            this.store.dispatch(setLoader({ status: false }));
             this.store.dispatch(setErrormessage({ message: '' }));
             return signupSuccess({ user });
           }),
           catchError((error) => {
-            // this.store.dispatch(setLoader({status: false}));
-            of(setLoader({ status: false }));
+            this.store.dispatch(setLoader({ status: false }));
             // this.store.dispatch(setErrormessage({message: error.error.error.message || 'SOMETHING WENT WRONG'}));
             return of(
               setErrormessage({
