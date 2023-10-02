@@ -9,7 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // import { StoreModule } from '@ngrx/store';
 // import { AuthReducer } from './store/auth.reducer';
 // import { AUTH_STATE } from './store/auth.selector';
-import { AuthService } from './services/auth.service';
+import { AuthService } from '../shared/services/auth.service';
 import { AuthEffects } from './store/auth.effect';
 import { EffectsModule } from '@ngrx/effects';
 import { SignupComponent } from './components/signup/signup.component';

@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../shared/services/auth.service';
 import {
+  getUser,
   loginFail,
   loginStart,
   loginSuccess,
   signupStart,
   signupSuccess,
 } from './auth.action';
-import { catchError, exhaustMap, map, of, tap } from 'rxjs';
+import { catchError, exhaustMap, map, mergeMap, of, tap } from 'rxjs';
 import { IAuth, IUser } from './auth.state';
 import { IShareState } from 'src/app/shared/store/shared.state';
 import { Store } from '@ngrx/store';
@@ -31,6 +32,7 @@ export class AuthEffects {
         this.store.dispatch(setLoader({ status: true }));
         return this.authService.login(action.email, action.password).pipe(
           map((user: IUser) => {
+            this.authService.saveUser(user);
             this.store.dispatch(setLoader({ status: false }));
             this.store.dispatch(setErrormessage({ message: '' }));
             return loginSuccess({ user });
@@ -50,18 +52,6 @@ export class AuthEffects {
     )
   );
 
-  redirect$ = createEffect(
-    () => {
-      return this.actions$.pipe(
-        ofType(...[loginSuccess, signupSuccess]),
-        tap((action) => {
-          this.router.navigate(['/']);
-        })
-      );
-    },
-    { dispatch: false }
-  );
-
   signup$ = createEffect(() =>
     this.actions$.pipe(
       ofType(signupStart),
@@ -69,6 +59,7 @@ export class AuthEffects {
         this.store.dispatch(setLoader({ status: true }));
         return this.authService.signup(action.email, action.password).pipe(
           map((user: IUser) => {
+            this.authService.saveUser(user);
             this.store.dispatch(setLoader({ status: false }));
             this.store.dispatch(setErrormessage({ message: '' }));
             return signupSuccess({ user });
@@ -86,5 +77,28 @@ export class AuthEffects {
         );
       })
     )
+  );
+
+  getUserDetail$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(getUser),
+      mergeMap((action: any) => {
+        const user = this.authService.getUserData();
+        this.store.dispatch(setErrormessage({ message: '' }));
+        return of(loginSuccess({ user }));
+      })
+    )
+  );
+
+  redirect$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(...[loginSuccess, signupSuccess]),
+        tap((action) => {
+          this.router.navigate(['/']);
+        })
+      );
+    },
+    { dispatch: false }
   );
 }

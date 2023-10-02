@@ -15,6 +15,9 @@ import { HeaderComponent } from './shared/components/header/header.component';
 import { HomeComponent } from './home/home.component';
 import { EffectsModule } from '@ngrx/effects';
 import { LoaderSpinnerComponent } from './shared/components/loader-spinner/loader-spinner.component';
+import { AuthEffects } from './auth/store/auth.effect';
+import { AuthService } from './shared/services/auth.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -25,14 +28,20 @@ import { LoaderSpinnerComponent } from './shared/components/loader-spinner/loade
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([AuthEffects]),
     // StoreModule.forRoot({ counter: counterReducer, posts: postReducer, share: shareReducer }), // I can do that or like below to create reducer file in app store & put all those in one file
     // StoreModule.forRoot(appReducer), // Whoel store Loader with Variable
-    StoreModule.forRoot({share: shareReducer, auth: AuthReducer}), //above modules are loaded on Application load, but now Lazzy load the Store as per requirment
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode(), trace: true, traceLimit: 75})
+    StoreModule.forRoot({ share: shareReducer, auth: AuthReducer }), //above modules are loaded on Application load, but now Lazzy load the Store as per requirment
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: !isDevMode(),
+      trace: true,
+      traceLimit: 75,
+    }),
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [AuthService],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

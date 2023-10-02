@@ -22,3 +22,6 @@ export const signupSuccess = createAction(
   props<{ user: IUser }>()
 );
 export const signupFail = createAction('signupFail');
+
+// Get User Detail
+export const getUser = createAction('getUser');
