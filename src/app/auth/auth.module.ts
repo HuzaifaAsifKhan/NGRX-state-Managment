@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AuthRoutingModule } from './auth-routing.module';
 import { AuthComponent } from './auth.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './components/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // import { StoreModule } from '@ngrx/store';
 // import { AuthReducer } from './store/auth.reducer';
@@ -12,13 +12,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './services/auth.service';
 import { AuthEffects } from './store/auth.effect';
 import { EffectsModule } from '@ngrx/effects';
-
+import { SignupComponent } from './components/signup/signup.component';
 
 @NgModule({
-  declarations: [
-    AuthComponent,
-    LoginComponent
-  ],
+  declarations: [AuthComponent, LoginComponent, SignupComponent],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -26,8 +23,8 @@ import { EffectsModule } from '@ngrx/effects';
     FormsModule,
     EffectsModule.forFeature([AuthEffects]),
     // StoreModule.forFeature(AUTH_STATE, AuthReducer),
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
-  providers: [AuthService]
+  providers: [AuthService],
 })
-export class AuthModule { }
+export class AuthModule {}

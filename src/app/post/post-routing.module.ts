@@ -6,23 +6,23 @@ import { EditPostComponent } from './components/edit-post/edit-post.component';
 
 const routes: Routes = [
   {
-    path : '',
+    path: '',
     component: PostComponent,
     children: [
-        {
-            path: 'add',
-            component: AddPostComponent
-        },
-        {
-            path: 'edit/:id',
-            component:  EditPostComponent
-        }
-    ]
-}
+      {
+        path: 'add',
+        component: AddPostComponent,
+      },
+      {
+        path: 'edit/:id',
+        component: EditPostComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class PostRoutingModule { }
+export class PostRoutingModule {}
