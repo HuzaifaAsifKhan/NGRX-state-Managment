@@ -8,7 +8,7 @@ export const loginStart = createAction(
 );
 export const loginSuccess = createAction(
   'loginSuccess',
-  props<{ user: IUser }>()
+  props<{ user: IUser; redirect: boolean }>()
 );
 export const loginFail = createAction('loginFail');
 
@@ -19,9 +19,12 @@ export const signupStart = createAction(
 );
 export const signupSuccess = createAction(
   'signupSuccess',
-  props<{ user: IUser }>()
+  props<{ user: IUser; redirect: boolean }>()
 );
 export const signupFail = createAction('signupFail');
 
 // Get User Detail
 export const getUser = createAction('getUser');
+
+// Logout
+export const logout = createAction('logout');

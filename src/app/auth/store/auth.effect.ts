@@ -6,6 +6,7 @@ import {
   loginFail,
   loginStart,
   loginSuccess,
+  logout,
   signupStart,
   signupSuccess,
 } from './auth.action';
@@ -35,7 +36,7 @@ export class AuthEffects {
             this.authService.saveUser(user);
             this.store.dispatch(setLoader({ status: false }));
             this.store.dispatch(setErrormessage({ message: '' }));
-            return loginSuccess({ user });
+            return loginSuccess({ user, redirect: true });
           }),
           catchError((error) => {
             this.store.dispatch(setLoader({ status: false }));
@@ -62,7 +63,7 @@ export class AuthEffects {
             this.authService.saveUser(user);
             this.store.dispatch(setLoader({ status: false }));
             this.store.dispatch(setErrormessage({ message: '' }));
-            return signupSuccess({ user });
+            return signupSuccess({ user, redirect: true });
           }),
           catchError((error) => {
             this.store.dispatch(setLoader({ status: false }));
@@ -85,9 +86,21 @@ export class AuthEffects {
       mergeMap((action: any) => {
         const user = this.authService.getUserData();
         this.store.dispatch(setErrormessage({ message: '' }));
-        return of(loginSuccess({ user }));
+        return of(loginSuccess({ user, redirect: false }));
       })
     )
+  );
+
+  logout$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(logout),
+        map((action: any) => {
+          const user = this.authService.logout();
+          this.router.navigate(['auth']);
+        })
+      ),
+    { dispatch: false }
   );
 
   redirect$ = createEffect(
@@ -95,7 +108,7 @@ export class AuthEffects {
       return this.actions$.pipe(
         ofType(...[loginSuccess, signupSuccess]),
         tap((action) => {
-          this.router.navigate(['/']);
+          action.redirect ? this.router.navigate(['/']) : '';
         })
       );
     },

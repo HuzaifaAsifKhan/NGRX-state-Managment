@@ -32,7 +32,11 @@ export class AuthService {
 
   getUserData = () => JSON.parse(localStorage.getItem('user') || '');
 
-  saveUser(user: IUser) {
+  saveUser = (user: IUser) => {
     localStorage.setItem('user', JSON.stringify(user));
-  }
+  };
+
+  logout = () => {
+    localStorage.clear();
+  };
 }

@@ -30,7 +30,7 @@
           </ng-container>
           <ng-template  #noAuth>
             <li class="nav-item">
-              <a class="nav-link" [routerLink]="['/auth/login']" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:
+              <a (click)="onLogout()" class="nav-link" [routerLink]="['/auth/login']" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:
                 true}">Logout</a>
             </li>
           </ng-template>
