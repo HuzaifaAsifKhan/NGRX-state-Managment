@@ -9,20 +9,20 @@ import { EditPostComponent } from './components/edit-post/edit-post.component';
 import { postReducer } from './store/post.reducer';
 import { StoreModule } from '@ngrx/store';
 import { POST_STATE } from './store/post.selector';
-
+import { PostService } from './services/post.service';
+import { EffectsModule } from '@ngrx/effects';
+import { PostEffects } from './store/post.effects';
 
 @NgModule({
-  declarations: [
-    PostComponent,
-    AddPostComponent,
-    EditPostComponent
-  ],
+  declarations: [PostComponent, AddPostComponent, EditPostComponent],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     PostRoutingModule,
+    EffectsModule.forFeature([PostEffects]),
     StoreModule.forFeature(POST_STATE, postReducer),
-  ]
+  ],
+  providers: [PostService],
 })
-export class PostModule { }
+export class PostModule {}

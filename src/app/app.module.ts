@@ -17,8 +17,9 @@ import { EffectsModule } from '@ngrx/effects';
 import { LoaderSpinnerComponent } from './shared/components/loader-spinner/loader-spinner.component';
 import { AuthEffects } from './auth/store/auth.effect';
 import { AuthService } from './shared/services/auth.service';
-import { HttpClientModule } from '@angular/common/http';
-
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { AuthGuard } from './shared/services/auth.gaurd';
+import { HttpTokenInterceptor } from './shared/interceptors';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +42,15 @@ import { HttpClientModule } from '@angular/common/http';
       traceLimit: 75,
     }),
   ],
-  providers: [AuthService],
+  providers: [
+    AuthGuard,
+    AuthService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpTokenInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
