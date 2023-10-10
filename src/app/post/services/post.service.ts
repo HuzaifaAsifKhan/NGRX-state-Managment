@@ -48,4 +48,10 @@ export class PostService {
       `https://rtf-firebase-default-rtdb.asia-southeast1.firebasedatabase.app/posts/${id}.json`
     );
   };
+
+  postById = (id: string): Observable<IPost> => {
+    return this.http.get<IPost>(
+      `https://rtf-firebase-default-rtdb.asia-southeast1.firebasedatabase.app/posts/${id}.json`
+    );
+  };
 }

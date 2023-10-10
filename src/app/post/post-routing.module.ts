@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { PostComponent } from './post.component';
 import { AddPostComponent } from './components/add-post/add-post.component';
 import { EditPostComponent } from './components/edit-post/edit-post.component';
+import { DetailPostComponent } from './components/detail-post/detail-post.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,10 @@ const routes: Routes = [
         component: EditPostComponent,
       },
     ],
+  },
+  {
+    path: 'detail/:id',
+    component: DetailPostComponent,
   },
 ];
 

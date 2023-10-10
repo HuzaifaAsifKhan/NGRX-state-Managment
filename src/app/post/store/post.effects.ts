@@ -11,11 +11,16 @@ import {
   updatePost,
   updatePostSuccess,
 } from './post.action';
-import { map, mergeMap } from 'rxjs';
+import { filter, map, mergeMap, switchMap } from 'rxjs';
 import { IPost } from './post.state';
 import { Store } from '@ngrx/store';
 import { IAppState } from 'src/app/store/app.state';
 import { setLoader } from 'src/app/shared/store/share.action';
+import {
+  ROUTER_NAVIGATED,
+  ROUTER_NAVIGATION,
+  RouterNavigatedAction,
+} from '@ngrx/router-store';
 
 @Injectable()
 export class PostEffects {
@@ -83,6 +88,24 @@ export class PostEffects {
           })
         );
       })
+    )
+  );
+
+  postById$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ROUTER_NAVIGATED),
+      filter((r: RouterNavigatedAction) =>
+        r.payload.routerState.url.startsWith('/post/detail')
+      ),
+      map((r: any) => r.payload.routerState['params']['id'] || ''),
+      switchMap((id: string) =>
+        this.postService.postById(id).pipe(
+          map((resp) => {
+            const posts: IPost[] = [{ ...resp, id }];
+            return loadPostSuccess({ posts });
+          })
+        )
+      )
     )
   );
 }

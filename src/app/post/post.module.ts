@@ -12,9 +12,10 @@ import { POST_STATE } from './store/post.selector';
 import { PostService } from './services/post.service';
 import { EffectsModule } from '@ngrx/effects';
 import { PostEffects } from './store/post.effects';
+import { DetailPostComponent } from './components/detail-post/detail-post.component';
 
 @NgModule({
-  declarations: [PostComponent, AddPostComponent, EditPostComponent],
+  declarations: [PostComponent, AddPostComponent, EditPostComponent, DetailPostComponent],
   imports: [
     CommonModule,
     FormsModule,

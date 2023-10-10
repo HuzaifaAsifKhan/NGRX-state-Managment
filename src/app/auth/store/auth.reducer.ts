@@ -2,7 +2,7 @@ import { createReducer, on } from '@ngrx/store';
 import { IUserState } from './auth.state';
 import { loginStart, loginSuccess, logout, signupSuccess } from './auth.action';
 
-export const AuthReducer = createReducer(
+export const authReducer = createReducer(
   new IUserState(),
   // we dont need to call loginStart when we have effect calling on function behafe
   // on(loginStart, (state, action) => {
