@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './shared/services/auth.gaurd';
-import { DetailPostComponent } from './post/components/detail-post/detail-post.component';
 
 const routes: Routes = [
   {
@@ -23,10 +22,6 @@ const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
-  },
-  {
-    path: 'post/detail/:id',
-    component: DetailPostComponent,
   },
 ];
 
