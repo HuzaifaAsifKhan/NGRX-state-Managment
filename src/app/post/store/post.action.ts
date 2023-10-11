@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { IPost } from './post.state';
+import { Update } from '@ngrx/entity';
 
 // Add
 export const addPost = createAction('addPost', props<{ post: IPost }>());
@@ -14,13 +15,17 @@ export const deletePostSuccess = createAction(
   props<{ id: string }>()
 );
 // Update
+// export const updatePost = createAction(
+//   'updatePost',
+//   props<{ updatedPost: IPost }>()
+// );
 export const updatePost = createAction(
   'updatePost',
   props<{ updatedPost: IPost }>()
 );
 export const updatePostSuccess = createAction(
   'updatePostSuccess',
-  props<{ updatedPost: IPost }>()
+  props<{ updatedPost: Update<IPost> }>()
 );
 // Load
 export const loadPostStart = createAction('loadPostStart');

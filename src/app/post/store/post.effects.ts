@@ -16,11 +16,8 @@ import { IPost } from './post.state';
 import { Store } from '@ngrx/store';
 import { IAppState } from 'src/app/store/app.state';
 import { setLoader } from 'src/app/shared/store/share.action';
-import {
-  ROUTER_NAVIGATED,
-  ROUTER_NAVIGATION,
-  RouterNavigatedAction,
-} from '@ngrx/router-store';
+import { ROUTER_NAVIGATED, RouterNavigatedAction } from '@ngrx/router-store';
+import { Update } from '@ngrx/entity';
 
 @Injectable()
 export class PostEffects {
@@ -69,7 +66,14 @@ export class PostEffects {
         return this.postService.updatePost(action.updatedPost).pipe(
           map((resp) => {
             this.store.dispatch(setLoader({ status: false }));
-            return updatePostSuccess({ updatedPost: action.updatedPost });
+            //  return updatePostSuccess({ updatedPost: action.updatedPost });
+            const updatedPost: Update<IPost> = {
+              id: action.updatedPost.id,
+              changes: {
+                ...action.updatedPost,
+              },
+            };
+            return updatePostSuccess({ updatedPost });
           })
         );
       })
@@ -98,14 +102,16 @@ export class PostEffects {
         r.payload.routerState.url.startsWith('/post/detail')
       ),
       map((r: any) => r.payload.routerState['params']['id'] || ''),
-      switchMap((id: string) =>
-        this.postService.postById(id).pipe(
+      switchMap((id: string) => {
+        this.store.dispatch(setLoader({ status: true }));
+        return this.postService.postById(id).pipe(
           map((resp) => {
+            this.store.dispatch(setLoader({ status: false }));
             const posts: IPost[] = [{ ...resp, id }];
             return loadPostSuccess({ posts });
           })
-        )
-      )
+        );
+      })
     )
   );
 }
