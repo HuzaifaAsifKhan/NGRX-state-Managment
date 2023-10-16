@@ -11,13 +11,14 @@ import {
   updatePost,
   updatePostSuccess,
 } from './post.action';
-import { filter, map, mergeMap, switchMap } from 'rxjs';
+import { filter, map, mergeMap, of, switchMap, withLatestFrom } from 'rxjs';
 import { IPost } from './post.state';
 import { Store } from '@ngrx/store';
 import { IAppState } from 'src/app/store/app.state';
 import { setLoader } from 'src/app/shared/store/share.action';
 import { ROUTER_NAVIGATED, RouterNavigatedAction } from '@ngrx/router-store';
 import { Update } from '@ngrx/entity';
+import { getPosts } from './post.selector';
 
 @Injectable()
 export class PostEffects {
@@ -30,14 +31,20 @@ export class PostEffects {
   loadPost$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadPostStart),
-      mergeMap((action: any) => {
+      withLatestFrom(this.store.select(getPosts)),
+      mergeMap(([action, posts]) => {
         this.store.dispatch(setLoader({ status: true }));
-        return this.postService.getPosts().pipe(
-          map((posts: IPost[]) => {
-            this.store.dispatch(setLoader({ status: false }));
-            return loadPostSuccess({ posts });
-          })
-        );
+        if (!posts.length) {
+          return this.postService.getPosts().pipe(
+            map((posts: IPost[]) => {
+              this.store.dispatch(setLoader({ status: false }));
+              return loadPostSuccess({ posts });
+            })
+          );
+        } else {
+          this.store.dispatch(setLoader({ status: false }));
+          return of();
+        }
       })
     )
   );
@@ -102,15 +109,21 @@ export class PostEffects {
         r.payload.routerState.url.startsWith('/post/detail')
       ),
       map((r: any) => r.payload.routerState['params']['id'] || ''),
-      switchMap((id: string) => {
+      withLatestFrom(this.store.select(getPosts)),
+      switchMap(([id, posts]) => {
         this.store.dispatch(setLoader({ status: true }));
-        return this.postService.postById(id).pipe(
-          map((resp) => {
-            this.store.dispatch(setLoader({ status: false }));
-            const posts: IPost[] = [{ ...resp, id }];
-            return loadPostSuccess({ posts });
-          })
-        );
+        if (!posts.length) {
+          return this.postService.postById(id).pipe(
+            map((resp) => {
+              this.store.dispatch(setLoader({ status: false }));
+              const posts: IPost[] = [{ ...resp, id }];
+              return loadPostSuccess({ posts });
+            })
+          );
+        } else {
+          this.store.dispatch(setLoader({ status: false }));
+          return of();
+        }
       })
     )
   );

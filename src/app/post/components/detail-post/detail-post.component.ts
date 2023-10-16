@@ -14,6 +14,6 @@ export class DetailPostComponent {
   post: Observable<IPost | null | undefined>;
 
   constructor(private store: Store<IAppState>) {
-    this.post = this.store.pipe(select(getPostById));
+    this.post = this.store.select(getPostById);
   }
 }
