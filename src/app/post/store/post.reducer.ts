@@ -16,14 +16,20 @@ export const postReducer = createReducer(
     //   ...state,
     //   posts: [...state.posts, data],
     // };
-    return postAdapter.addOne(action.post, state);
+    return postAdapter.addOne(action.post, {
+      ...state,
+      count: state.count + 1,
+    });
   }),
   on(deletePostSuccess, (state, action) => {
     // return {
     //   ...state,
     //   posts: state.posts.filter((item) => item.id !== action.id),
     // };
-    return postAdapter.removeOne(action.id, state);
+    return postAdapter.removeOne(action.id, {
+      ...state,
+      count: state.count - 1,
+    });
   }),
   on(updatePostSuccess, (state, { updatedPost }) => {
     // return {
@@ -39,6 +45,6 @@ export const postReducer = createReducer(
     //   ...state,
     //   posts: action.posts,
     // };
-    return postAdapter.setAll(action.posts, state);
+    return postAdapter.setAll(action.posts, { ...state, count: state.count });
   })
 );

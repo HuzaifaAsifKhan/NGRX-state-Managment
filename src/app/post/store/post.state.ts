@@ -21,7 +21,18 @@ export interface IPost {
 //   ];
 // }
 
-export interface IPostEntity extends EntityState<IPost> {}
+export interface IPostEntity extends EntityState<IPost> {
+  count: number;
+}
 
-export const postAdapter = createEntityAdapter<IPost>();
-export const IPostState: IPostEntity = postAdapter.getInitialState();
+export const postAdapter = createEntityAdapter<IPost>({
+  // selectId: (post: IPost) => post.id, //id is maintainig by default so dont need to do that
+  sortComparer: sortByName,
+});
+export const IPostState: IPostEntity = postAdapter.getInitialState({
+  count: 0,
+});
+
+export function sortByName(a: IPost, b: IPost): number {
+  return a.title.localeCompare(b.title);
+}

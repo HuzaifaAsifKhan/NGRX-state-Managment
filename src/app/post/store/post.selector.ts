@@ -8,6 +8,8 @@ const getPostState = createFeatureSelector<typeof IPostState>(POST_STATE);
 
 const { selectAll, selectEntities } = postAdapter.getSelectors();
 
+export const getCount = createSelector(getPostState, (state) => state.count);
+
 export const getPosts = createSelector(
   getPostState,
   selectAll
